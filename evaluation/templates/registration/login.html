@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Company Evaluation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 flex items-center justify-center h-screen">
+    <div class="bg-slate-800 p-8 rounded-xl shadow-2xl w-96 border border-slate-700">
+        <h2 class="text-2xl font-bold mb-6 text-center text-indigo-400">System Login</h2>
+        {% if form.errors %}
+            <p class="text-red-400 text-sm mb-4 bg-red-950/50 p-3 rounded border border-red-800">Invalid credentials. Try again.</p>
+        {% endif %}
+        <form method="post" action="{% url 'login' %}" class="space-y-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 font-semibold py-2 rounded-lg transition">Sign In</button>
+        </form>
+    </div>
+</body>
+</html>

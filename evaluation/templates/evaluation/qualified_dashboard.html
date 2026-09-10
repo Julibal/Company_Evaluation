@@ -1,0 +1,61 @@
+Replace the entire contents of your evaluation/templates/evaluation/qualified_dashboard.html file with this complete version to include the personnel's name while keeping all sections intact:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personnel Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen p-6 md:p-12">
+    <div class="max-w-4xl mx-auto space-y-8">
+        <div class="flex justify-between items-center bg-slate-900/40 backdrop-blur-xl border border-white/10 p-6 rounded-3xl">
+            <div>
+                <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20">Onboarding Completed</span>
+                <h1 class="text-3xl font-extrabold text-white mt-1">{{ profile.user.get_full_name|default:profile.user.username }}'s Dashboard</h1>
+            </div>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-4 py-2 rounded-xl text-xs font-semibold transition">Logout</button>
+            </form>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-900/40 backdrop-blur-xl border border-white/10 p-6 rounded-3xl">
+                <h3 class="text-sm font-medium text-slate-400 mb-1">Compensation Package</h3>
+                <p class="text-xl font-bold text-white">{{ profile.compensation }}</p>
+            </div>
+            <div class="bg-slate-900/40 backdrop-blur-xl border border-white/10 p-6 rounded-3xl">
+                <h3 class="text-sm font-medium text-slate-400 mb-1">Target Metric</h3>
+                <p class="text-xl font-bold text-white">{{ profile.target_metric|default:"Assigned Goals Active" }}</p>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/40 backdrop-blur-xl border border-white/10 p-6 rounded-3xl space-y-3">
+            <h2 class="text-xl font-bold text-indigo-400">Role & Target Obligations</h2>
+            <div class="text-slate-300 whitespace-pre-line bg-slate-950/40 p-4 rounded-2xl border border-white/5">
+                {{ profile.role_notes }}
+            </div>
+        </div>
+
+        <div class="bg-slate-900/40 backdrop-blur-xl border border-white/10 p-6 rounded-3xl space-y-3">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-cyan-400">Stock Options Agreement</h2>
+                <span class="text-emerald-400 text-xs font-medium">Signed by {{ profile.stock_signature_name }} on {{ profile.stock_signed_at|date:"M d, Y" }}</span>
+            </div>
+            <div class="text-slate-300 whitespace-pre-line bg-slate-950/40 p-4 rounded-2xl border border-white/5 max-h-48 overflow-y-auto text-sm">
+                {{ profile.stock_agreement_text }}
+            </div>
+        </div>
+
+        <div class="bg-slate-900/40 backdrop-blur-xl border border-white/10 p-6 rounded-3xl space-y-3">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-emerald-400">Non-Disclosure Agreement (NDA)</h2>
+                <span class="text-emerald-400 text-xs font-medium">Signed by {{ profile.nda_signature_name }} on {{ profile.nda_signed_at|date:"M d, Y" }}</span>
+            </div>
+            <div class="text-slate-300 whitespace-pre-line bg-slate-950/40 p-4 rounded-2xl border border-white/5 max-h-48 overflow-y-auto text-sm">
+                {{ profile.nda_text }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
